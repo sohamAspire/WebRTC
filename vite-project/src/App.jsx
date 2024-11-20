@@ -1,14 +1,13 @@
-import './App.css'
-import Home from './components/Home'
-function App() {
+import VideoChat from "./components/VideoChat";
 
+
+function App() {
   return (
-    <>
-      <div className='text-[20px] container max-w-[1920px] mx-auto px-10'>
-          <Home />
-      </div>
-    </>
-  )
+    <div className="App">
+      <h1>Video Chat Application</h1>
+      <VideoChat />
+    </div>
+  );
 }
 
-export default App
+export default App;
