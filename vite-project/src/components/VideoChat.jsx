@@ -33,6 +33,8 @@ const VideoChat = () => {
         });
     }, []);
 
+
+    // To Call Video
     const callUser = (id) => {
         navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then(stream => {
             myVideoRef.current.srcObject = stream;
@@ -44,11 +46,22 @@ const VideoChat = () => {
     };
 
     return (
-        <div>
-            <video ref={myVideoRef} autoPlay muted />
-            <video ref={userVideoRef} autoPlay />
-            <input type="text" value={callId} onChange={(e) => setCallId(e.target.value)} placeholder="Enter ID to call" />
-            <button onClick={() => callUser(callId)}>Call</button>
+        <div className='py-2'>
+            <div className='flex flex-row gap-10'>
+                <div>
+                    Local
+                    <video ref={myVideoRef} autoPlay muted />
+                </div>
+                <div>
+                    Remote  
+                    <video ref={userVideoRef} autoPlay />
+                </div>
+            </div>
+            <span>Peer ID - {myPeerId}</span>
+            <div className='border border-gray-500/50 sm:w-full md:w-[600px] rounded-md overflow-hidden flex justify-between'>
+                <input type="text" value={callId} onChange={(e) => setCallId(e.target.value)} placeholder="Enter ID to call" className='w-full ml-2' />
+                <button className='bg-gray-500 text-white hover:opacity-60 transition-none duration-300 px-10 py-2 rounded-lg' onClick={() => callUser(callId)}>Call</button>
+            </div>
         </div>
     );
 };
