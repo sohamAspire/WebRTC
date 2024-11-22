@@ -1,12 +1,13 @@
+require('dotenv').config();
+
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const { ExpressPeerServer } = require('peer');
 const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
 const upload = require('./multer')
-
+const AWS = require('aws-sdk');
+const mergeChunks = require('./mergeChunks');
 
 const app = express();
 
@@ -26,32 +27,55 @@ const peerServer = ExpressPeerServer(server, { debug: true , });
 
 app.use('/peerjs', peerServer);
 
+AWS.config.update({
+    region: process.env.AWS_REGION,
+    accessKeyId: process.env.AWS_ACCESS_ID,
+    secretAccessKey: process.env.AWS_ACCESS_SECRET
+});
+
+const s3 = new AWS.S3();
+const BUCKET_NAME = 'rock-bucket';
+
+
 app.get('/', (req, res) => {
     res.status(200).send('Server is Up!');
 });
 
-app.post('/stream', upload.single('videoChunks'), (req, res) => {    
-    const videoChunk = req.file;
+app.post('/stream', upload.single('videoChunks'), async (req, res) => {    
+     const videoChunk = req.file;
 
     if (!videoChunk) {
         return res.status(400).json({ message: 'No video chunk received' });
     }
 
-    const publicPath = path.join(__dirname, 'public', 'videos');
-    
-    if (!fs.existsSync(publicPath)) {
-        fs.mkdirSync(publicPath, { recursive: true });
+    const { chunkIndex, totalChunks, fileId } = req.body;
+
+    if (!chunkIndex || !totalChunks || !fileId) {
+        return res.status(400).json({ message: 'Missing required metadata' });
     }
+    
+    const params = {
+        Bucket: BUCKET_NAME,
+        Key: `videos/${fileId}_${chunkIndex}.webm`,
+        Body: videoChunk.buffer,
+        ContentType: videoChunk.mimetype,
+    };
 
-    const videoFilePath = path.join(publicPath, 'video_recording.webm');
-
-    fs.appendFile(videoFilePath, videoChunk.buffer, (err) => {
-        if (err) {
-            return res.status(500).json({ message: 'Error saving video chunk' });
+    if(chunkIndex <= 10) {
+        try {
+            await s3.upload(params).promise();
+            
+            if (parseInt(chunkIndex, 10) === parseInt(totalChunks, 10) - 1) {
+                await mergeChunks(fileId, totalChunks);
+                return res.json({ message: 'All chunks uploaded and merged successfully' });
+            }
+    
+            res.json({ message: `Chunk ${chunkIndex} uploaded successfully` });
+        } catch (err) {
+            console.error('Error uploading chunk:', err);
+            res.status(500).json({ message: 'Error uploading chunk', error: err.message });
         }
-
-        res.json({ message: 'Chunk saved successfully' });
-    });
+    }
 });
 
 io.on('connection', (socket) => {
