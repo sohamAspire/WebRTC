@@ -12,7 +12,7 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
+    origin: 'https://frontend-phi-nine-80.vercel.app',
     credentials: true
 }))
 
@@ -48,7 +48,7 @@ app.get('/cookies', (req, res) => {
         httpOnly: true,
         sameSite: 'none',
         secure: true
-    }).redirect(process.env.FRONTEND_URL)
+    }).redirect('https://frontend-phi-nine-80.vercel.app/')
 })
 
 app.post('/set-cookies', (req, res) => {

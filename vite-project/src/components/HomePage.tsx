@@ -6,20 +6,20 @@ const HomePage = () => {
 
     const handleSetCookies = () => {
         setLoading(true)
-        axios.post(`${process.env.REACT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL}/set-cookies`, {}, { withCredentials: true }).finally(() => {
+        axios.post(`https://node-fgsm.onrender.com/set-cookies`, {}, { withCredentials: true }).finally(() => {
             setLoading(false)
         })
     }
 
     const handleRemoveCookies = () => {
         setLoading(true)
-        axios.post(`${process.env.REACT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL}/remove-cookies`, {}, { withCredentials: true }).finally(() => {
+        axios.post(`https://node-fgsm.onrender.com/remove-cookies`, {}, { withCredentials: true }).finally(() => {
             setLoading(false)
         })
     }
 
     const handleRedirectCookies = () => {
-        window.open(`${process.env.REACT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL}/cookies`, "_self")
+        window.open(`https://node-fgsm.onrender.com/cookies`, "_self")
     }
 
     return (
