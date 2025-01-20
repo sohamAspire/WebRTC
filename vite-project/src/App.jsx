@@ -1,12 +1,10 @@
-import VideoChat from "./components/VideoChat";
+// import TermsConditions from "./components/TermsConditions";
 
+import HomePage from "./components/HomePage";
 
 function App() {
   return (
-    <div className="container max-w-[1920px] mx-auto px-10 pt-10 font-mono">
-      <h1>Video Chat Application</h1>
-      <VideoChat />
-    </div>
+    <HomePage />
   );
 }
 
