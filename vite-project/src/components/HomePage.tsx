@@ -19,7 +19,7 @@ const HomePage = () => {
     }
 
     const handleRedirectCookies = () => {
-        window.open(`https://node-fgsm.onrender.com/cookies`, "_self")
+        window.location.href = `https://node-fgsm.onrender.com/cookies`
     }
 
     return (

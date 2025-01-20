@@ -44,11 +44,12 @@ app.get('/', (req, res) => {
 });
 
 app.get('/cookies', (req, res) => {
-    return res.cookie('accessToken', 'true', {
+    res.cookie('accessToken', 'true', {
         httpOnly: true,
         sameSite: 'none',
         secure: true
-    }).redirect('https://frontend-phi-nine-80.vercel.app/')
+    })
+    res.redirect('https://frontend-phi-nine-80.vercel.app/')
 })
 
 app.post('/set-cookies', (req, res) => {
