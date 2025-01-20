@@ -6,6 +6,8 @@ const http = require('http');
 // const { Server } = require('socket.io');
 const { ExpressPeerServer } = require('peer');
 const cors = require('cors');
+const session = require('express-session');
+
 // const upload = require('./multer')
 // const AWS = require('aws-sdk');
 // const mergeChunks = require('./mergeChunks');
