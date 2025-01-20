@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const http = require('http');
 // const { Server } = require('socket.io');
 const { ExpressPeerServer } = require('peer');
@@ -15,6 +16,22 @@ app.use(cors({
     origin: 'https://frontend-phi-nine-80.vercel.app',
     credentials: true
 }))
+
+// Middleware for parsing cookies
+app.use(cookieParser());
+
+// Session management
+app.use(
+    session({
+        secret: 'secret', // Replace with a strong secret
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            secure: true, // Ensure HTTPS in production
+            sameSite: 'none', // Cross-site cookies
+        },
+    })
+);
 
 const server = http.createServer(app);
 // const io = new Server(server, {
@@ -47,9 +64,10 @@ app.get('/cookies', (req, res) => {
     res.cookie('accessToken', 'true', {
         httpOnly: true,
         sameSite: 'none',
-        secure: true
+        secure: true,
+        domain : '.vercel.app'
     })
-    res.redirect('https://frontend-phi-nine-80.vercel.app/')
+    res.redirect('https://frontend-phi-nine-80.vercel.app')
 })
 
 app.post('/set-cookies', (req, res) => {
