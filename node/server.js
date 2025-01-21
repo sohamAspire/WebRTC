@@ -68,6 +68,7 @@ app.get('/cookies', (req, res) => {
         sameSite: 'none',
         secure: true,
         path: '/', // Cookie is accessible across all routes
+        maxAge: 60 * 60 * 1000 // Set an expiration (e.g., 1 hour)
     })
     res.redirect('https://frontend-phi-nine-80.vercel.app')
 })
@@ -78,6 +79,7 @@ app.post('/set-cookies', (req, res) => {
         sameSite: 'none',
         secure: true,
         path: '/', // Cookie is accessible across all routes
+        maxAge: 60 * 60 * 1000 // Set an expiration (e.g., 1 hour)
     }).json({ message: "Success" })
 })
 
@@ -87,6 +89,7 @@ app.post('/remove-cookies', (req, res) => {
         sameSite: 'none',
         secure: true,
         path: '/', // Cookie is accessible across all routes
+        maxAge: 60 * 60 * 1000 // Set an expiration (e.g., 1 hour)
     }).json({ message: "Success" })
 })
 
