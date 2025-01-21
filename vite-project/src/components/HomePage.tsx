@@ -30,7 +30,7 @@ const HomePage = () => {
                 <div className='flex gap-4'>
                     <button className='border-2 border-black p-2 rounded-lg text-sm min-w-[100px] hover:bg-black hover:text-white transition-all duration-200' onClick={handleSetCookies}>Set Cookies</button>
                     <button className='border-2 border-black p-2 rounded-lg text-sm min-w-[100px]  hover:bg-black hover:text-white transition-all duration-200' onClick={handleRemoveCookies}>Delete Cookies</button>
-                    <button className='border-2 border-black p-2 rounded-lg text-sm min-w-[100px]  hover:bg-black hover:text-white transition-all duration-200' onClick={handleRedirectCookies}>Redirect Cookies</button>
+                    <a className='border-2 border-black p-2 rounded-lg text-sm min-w-[100px]  hover:bg-black hover:text-white transition-all duration-200' href='https://node-fgsm.onrender.com/cookies'>Redirect Cookies</a>
                 </div>
             </div>
         </div>

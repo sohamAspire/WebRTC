@@ -67,7 +67,6 @@ app.get('/cookies', (req, res) => {
         httpOnly: true,
         sameSite: 'none',
         secure: true,
-        domain : '.vercel.app'
     })
     res.redirect('https://frontend-phi-nine-80.vercel.app')
 })
