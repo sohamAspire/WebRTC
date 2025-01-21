@@ -67,6 +67,8 @@ app.get('/cookies', (req, res) => {
         httpOnly: true,
         sameSite: 'none',
         secure: true,
+        domain: '.vercel.app', // Set the cookie for the frontend domain
+        path: '/', // Cookie is accessible across all routes
     })
     res.redirect('https://frontend-phi-nine-80.vercel.app')
 })
@@ -75,7 +77,9 @@ app.post('/set-cookies', (req, res) => {
     return res.cookie('accessToken', 'true', {
         httpOnly: true,
         sameSite: 'none',
-        secure: true
+        secure: true,
+        domain: '.vercel.app', // Set the cookie for the frontend domain
+        path: '/', // Cookie is accessible across all routes
     }).json({ message: "Success" })
 })
 
@@ -83,7 +87,9 @@ app.post('/remove-cookies', (req, res) => {
     return res.clearCookie("accessToken", {
         httpOnly: true,
         sameSite: 'none',
-        secure: true
+        secure: true,
+        domain: '.vercel.app', // Set the cookie for the frontend domain
+        path: '/', // Cookie is accessible across all routes
     }).json({ message: "Success" })
 })
 
