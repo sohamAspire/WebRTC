@@ -22,6 +22,15 @@ const HomePage = () => {
         window.location.href = `https://node-fgsm.onrender.com/cookies`
     }
 
+    function openNewWindow() {
+        const newWindow = window.open('https://node-fgsm.onrender.com/cookies', '_blank');
+        if (newWindow) {
+            newWindow.opener = null; // Prevent access to opener
+        } else {
+            alert('Popup blocked! Please allow popups for this site.');
+        }
+    }
+
     return (
         <div className='container max-w-[1920px] h-screen flex items-center justify-center mx-auto px-10 pt-10 font-mono'>
             <div className='flex flex-col gap-6 text-center'>
@@ -30,7 +39,7 @@ const HomePage = () => {
                 <div className='flex gap-4'>
                     <button className='border-2 border-black p-2 rounded-lg text-sm min-w-[100px] hover:bg-black hover:text-white transition-all duration-200' onClick={handleSetCookies}>Set Cookies</button>
                     <button className='border-2 border-black p-2 rounded-lg text-sm min-w-[100px]  hover:bg-black hover:text-white transition-all duration-200' onClick={handleRemoveCookies}>Delete Cookies</button>
-                    <a className='border-2 border-black p-2 rounded-lg text-sm min-w-[100px]  hover:bg-black hover:text-white transition-all duration-200' href='https://node-fgsm.onrender.com/cookies'>Redirect Cookies</a>
+                    <button className='border-2 border-black p-2 rounded-lg text-sm min-w-[100px]  hover:bg-black hover:text-white transition-all duration-200' onClick={openNewWindow}>Redirect Cookies</button>
                 </div>
             </div>
         </div>
