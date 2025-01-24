@@ -19,6 +19,11 @@ app.use(cors({
     credentials: true
 }))
 
+app.use((req, res, next) => {
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin-allow-popups');
+    next();
+});
+
 // Middleware for parsing cookies
 app.use(cookieParser());
 
@@ -65,10 +70,9 @@ app.get('/', (req, res) => {
 app.get('/cookies', (req, res) => {
     res.cookie('accessToken', 'true', {
         httpOnly: true,
-        sameSite: 'none',
-        secure: true,
-        path: '/', // Cookie is accessible across all routes
-        maxAge: 60 * 60 * 1000 // Set an expiration (e.g., 1 hour)
+        secure: true, // Use true in production
+        sameSite: 'None', // Allow cross-origin
+        maxAge: 3600000, // 1 hour expiration
     })
     res.redirect('https://frontend-phi-nine-80.vercel.app')
 })
@@ -76,20 +80,18 @@ app.get('/cookies', (req, res) => {
 app.post('/set-cookies', (req, res) => {
     return res.cookie('accessToken', 'true', {
         httpOnly: true,
-        sameSite: 'none',
-        secure: true,
-        path: '/', // Cookie is accessible across all routes
-        maxAge: 60 * 60 * 1000 // Set an expiration (e.g., 1 hour)
+        secure: true, // Use true in production
+        sameSite: 'None', // Allow cross-origin
+        maxAge: 3600000, // 1 hour expiration
     }).json({ message: "Success" })
 })
 
 app.post('/remove-cookies', (req, res) => {
     return res.clearCookie("accessToken", {
         httpOnly: true,
-        sameSite: 'none',
-        secure: true,
-        path: '/', // Cookie is accessible across all routes
-        maxAge: 60 * 60 * 1000 // Set an expiration (e.g., 1 hour)
+        secure: true, // Use true in production
+        sameSite: 'None', // Allow cross-origin
+        maxAge: 3600000, // 1 hour expiration
     }).json({ message: "Success" })
 })
 
