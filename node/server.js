@@ -24,6 +24,9 @@ app.use((req, res, next) => {
     next();
 });
 
+// Enable trust proxy for secure cookies
+app.set('trust proxy', 1);
+
 // Middleware for parsing cookies
 app.use(cookieParser());
 
