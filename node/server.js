@@ -19,7 +19,7 @@ const app = express();
 
 
 app.use(cors({
-    origin: 'https://frontend-phi-nine-80.vercel.app',
+    origin: '*',
     credentials: true
 }))
 
