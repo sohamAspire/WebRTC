@@ -7,12 +7,16 @@ const http = require('http');
 const { ExpressPeerServer } = require('peer');
 const cors = require('cors');
 const session = require('express-session');
+const passport = require('passport');
+const cookieSession = require('cookie-session');
+require('./passport'); // Import your passport configuration
 
 // const upload = require('./multer')
 // const AWS = require('aws-sdk');
 // const mergeChunks = require('./mergeChunks');
 
 const app = express();
+
 
 app.use(cors({
     origin: 'https://frontend-phi-nine-80.vercel.app',
@@ -29,6 +33,17 @@ app.set('trust proxy', 1);
 
 // Middleware for parsing cookies
 app.use(cookieParser());
+
+// Set up cookie session
+app.use(cookieSession({
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    keys: ['sadasd'] // Change this to a secure key in production
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 // Session management
 app.use(
@@ -97,6 +112,23 @@ app.post('/remove-cookies', (req, res) => {
         maxAge: 3600000, // 1 hour expiration
     }).json({ message: "Success" })
 })
+
+
+// Google authentication routes
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+app.get('/auth/google/callback', 
+    passport.authenticate('google', { failureRedirect: '/' }),
+    (req, res) => {
+        res.cookie('accessToken', 'true', {
+            httpOnly: true,
+            secure: true, // Use true in production
+            sameSite: 'None', // Allow cross-origin
+            maxAge: 3600000, // 1 hour expiration
+        })
+        res.redirect('https://frontend-phi-nine-80.vercel.app')
+    }
+);
 
 // app.post('/stream', upload.single('videoChunks'), async (req, res) => {
 //     const videoChunk = req.file;

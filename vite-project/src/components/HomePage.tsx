@@ -35,25 +35,13 @@ const HomePage = () => {
   };
 
   const handleRedirectCookiesWithFetch = () => {
-    fetch(`https://node-fgsm.onrender.com/cookies`, {
+    fetch(`https://node-fgsm.onrender.com/auth/google`, {
       method: "GET",
       credentials: "include",
     }).then((res)=> {
         console.log(res);
     });
   };
-
-  function openNewWindow() {
-    const newWindow = window.open(
-      "https://node-fgsm.onrender.com/cookies",
-      "_blank"
-    );
-    if (newWindow) {
-      newWindow.opener = null; // Prevent access to opener
-    } else {
-      alert("Popup blocked! Please allow popups for this site.");
-    }
-  }
 
   return (
     <div className="container max-w-[1920px] h-screen flex items-center justify-center mx-auto px-10 pt-10 font-mono">
