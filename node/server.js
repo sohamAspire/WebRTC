@@ -15,11 +15,13 @@ require('./passport'); // Import your passport configuration
 // const AWS = require('aws-sdk');
 // const mergeChunks = require('./mergeChunks');
 
+const URL = process.env.CLIENT_URL;
+
 const app = express();
 
 
 app.use(cors({
-    origin: '*',
+    origin: URL,
     credentials: true
 }))
 
@@ -37,7 +39,7 @@ app.use(cookieParser());
 // Set up cookie session
 app.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    keys: ['sadasd'] // Change this to a secure key in production
+    keys: ['asdasda'] // Change this to a secure key in production
 }));
 
 app.use(passport.initialize());
@@ -92,7 +94,7 @@ app.get('/cookies', (req, res) => {
         sameSite: 'None', // Allow cross-origin
         maxAge: 3600000, // 1 hour expiration
     })
-    res.redirect('https://frontend-phi-nine-80.vercel.app')
+    res.redirect(URL)
 })
 
 app.post('/set-cookies', (req, res) => {
@@ -126,7 +128,7 @@ app.get('/auth/google/callback',
             sameSite: 'None', // Allow cross-origin
             maxAge: 3600000, // 1 hour expiration
         })
-        res.redirect('https://frontend-phi-nine-80.vercel.app')
+        res.redirect(URL)
     }
 );
 
