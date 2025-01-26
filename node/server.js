@@ -8,7 +8,7 @@ const { ExpressPeerServer } = require('peer');
 const cors = require('cors');
 const session = require('express-session');
 const passport = require('passport');
-const cookieSession = require('cookie-session');
+// const cookieSession = require('cookie-session');
 require('./passport'); // Import your passport configuration
 
 // const upload = require('./multer')
@@ -18,7 +18,6 @@ require('./passport'); // Import your passport configuration
 const URL = process.env.CLIENT_URL;
 
 const app = express();
-
 
 app.use(cors({
     origin: URL,
@@ -36,16 +35,14 @@ app.set('trust proxy', 1);
 // Middleware for parsing cookies
 app.use(cookieParser());
 
-// Set up cookie session
-app.use(cookieSession({
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    keys: ['asdasda'] // Change this to a secure key in production
-}));
+// // Set up cookie session
+// app.use(cookieSession({
+//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
+//     keys: ['asdasda'] // Change this to a secure key in production
+// }));
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-
 
 // Session management
 app.use(
